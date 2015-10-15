@@ -89,7 +89,9 @@ module GrapeTokenAuth
           redirect redirect_url
         else
           # Fallback to the redirect_url param or root
-          redirect params[:redirect_url] || '/'
+          url = URI params[:redirect_url] || '/'
+          url.query = {reset_password: true}
+          redirect url.to_s
         end
       end
 
