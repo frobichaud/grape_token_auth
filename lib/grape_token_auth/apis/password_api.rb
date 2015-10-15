@@ -88,7 +88,8 @@ module GrapeTokenAuth
                                    config: params[:config])
           redirect redirect_url
         else
-          error!({ success: false }, 404)
+          # Fallback to the redirect_url param or root
+          redirect params[:redirect_url] || '/'
         end
       end
 
