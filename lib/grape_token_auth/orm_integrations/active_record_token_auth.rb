@@ -201,10 +201,10 @@ module GrapeTokenAuth
       end
 
       def build_auth_url(url, params)
-        url = URI(url)
+        url = URI.decode url
         expiry = tokens[params[:client_id]][:expiry]
-        url.query = params.merge(uid: uid, expiry: expiry).to_query
-        url.to_s
+        query = params.merge(uid: uid, expiry: expiry).to_query
+        url + "?#{query}"
       end
 
       def pending_reconfirmation?
