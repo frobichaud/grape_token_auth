@@ -1,3 +1,5 @@
+require 'grape_token_auth/mail/message_base'
+
 module GrapeTokenAuth
   module Mail
     class ConfirmationEmail < MessageBase
