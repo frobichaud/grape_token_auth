@@ -1,3 +1,5 @@
+require_relative 'resource_crud_base'
+
 module GrapeTokenAuth
   class ResourceUpdater < ResourceCrudBase
     def initialize(resource, params, configuration, scope = :user)
