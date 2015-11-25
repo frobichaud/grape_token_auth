@@ -84,9 +84,10 @@ module GrapeTokenAuth
 
           uri = URI(params[:redirect_url])
 
-          query_params = Rack::Utils.parse_query(uri.query).merge({reset_password: true,
-                                                                   client_id: token.client_id,
-                                                                   config: params[:config]})
+          query_params = Rack::Utils.parse_query(uri.query).merge({ token: token.to_s,
+                                                                    reset_password: true,
+                                                                    client_id: token.client_id,
+                                                                    config: params[:config]})
 
           uri.query = nil
           url = uri.to_s
