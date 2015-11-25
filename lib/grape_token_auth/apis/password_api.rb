@@ -82,10 +82,17 @@ module GrapeTokenAuth
 
           resource.save!
 
-          redirect_url = resource.build_auth_url(
-            params[:redirect_url], token: token.to_s, reset_password: true,
-                                   client_id: token.client_id,
-                                   config: params[:config])
+          uri = URI(params[:redirect_url])
+
+          query_params = Rack::Utils.parse_query(uri.query).merge({reset_password: true,
+                                                                   client_id: token.client_id,
+                                                                   config: params[:config]})
+
+          uri.query = nil
+          url = uri.to_s
+
+          redirect_url = resource.build_auth_url(url, query_params)
+
           redirect redirect_url
         else
           # Fallback to the redirect_url param or root
