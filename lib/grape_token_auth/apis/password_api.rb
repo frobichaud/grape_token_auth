@@ -97,12 +97,10 @@ module GrapeTokenAuth
           redirect redirect_url
         else
           # Fallback to the redirect_url param or root
-          url  = URI(params[:failure_redirect_url] || '/')
-          query_params = Rack::Utils.parse_query(url.query).merge({ reset_password: true })
+          url = URI(params[:failure_redirect_url] || '/')
+          url.query = [url.query, "reset_password=true"].compact.join('&')
 
-          url.query = nil
-
-          redirect url.to_s + '?' + query_params.to_query
+          redirect url.to_s
         end
       end
 
